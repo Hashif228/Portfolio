@@ -1,159 +1,117 @@
-'use strict';
+/* ----- NAVIGATION BAR FUNCTION ----- */
+function myMenuFunction(){
+  var menuBtn = document.getElementById("myNavMenu");
 
-
-
-// element toggle function
-const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
-
-
-
-// sidebar variables
-const sidebar = document.querySelector("[data-sidebar]");
-const sidebarBtn = document.querySelector("[data-sidebar-btn]");
-
-// sidebar toggle functionality for mobile
-sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
-
-
-
-// testimonials variables
-const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
-const modalContainer = document.querySelector("[data-modal-container]");
-const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
-const overlay = document.querySelector("[data-overlay]");
-
-// modal variable
-const modalImg = document.querySelector("[data-modal-img]");
-const modalTitle = document.querySelector("[data-modal-title]");
-const modalText = document.querySelector("[data-modal-text]");
-
-// modal toggle function
-const testimonialsModalFunc = function () {
-  modalContainer.classList.toggle("active");
-  overlay.classList.toggle("active");
+  if(menuBtn.className === "nav-menu"){
+    menuBtn.className += " responsive";
+  } else {
+    menuBtn.className = "nav-menu";
+  }
 }
 
-// add click event to all modal items
-for (let i = 0; i < testimonialsItem.length; i++) {
+/* ----- ADD SHADOW ON NAVIGATION BAR WHILE SCROLLING ----- */
+window.onscroll = function() {headerShadow()};
 
-  testimonialsItem[i].addEventListener("click", function () {
+function headerShadow() {
+  const navHeader =document.getElementById("header");
 
-    modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
-    modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
-    modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
-    modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
+  if (document.body.scrollTop > 50 || document.documentElement.scrollTop >  50) {
 
-    testimonialsModalFunc();
+    navHeader.style.boxShadow = "0 1px 6px rgba(0, 0, 0, 0.1)";
+    navHeader.style.height = "70px";
+    navHeader.style.lineHeight = "70px";
 
-  });
+  } else {
 
-}
-
-// add click event to modal close button
-modalCloseBtn.addEventListener("click", testimonialsModalFunc);
-overlay.addEventListener("click", testimonialsModalFunc);
-
-
-
-// custom select variables
-const select = document.querySelector("[data-select]");
-const selectItems = document.querySelectorAll("[data-select-item]");
-const selectValue = document.querySelector("[data-selecct-value]");
-const filterBtn = document.querySelectorAll("[data-filter-btn]");
-
-select.addEventListener("click", function () { elementToggleFunc(this); });
-
-// add event in all select items
-for (let i = 0; i < selectItems.length; i++) {
-  selectItems[i].addEventListener("click", function () {
-
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    elementToggleFunc(select);
-    filterFunc(selectedValue);
-
-  });
-}
-
-// filter variables
-const filterItems = document.querySelectorAll("[data-filter-item]");
-
-const filterFunc = function (selectedValue) {
-
-  for (let i = 0; i < filterItems.length; i++) {
-
-    if (selectedValue === "all") {
-      filterItems[i].classList.add("active");
-    } else if (selectedValue === filterItems[i].dataset.category) {
-      filterItems[i].classList.add("active");
-    } else {
-      filterItems[i].classList.remove("active");
-    }
+    navHeader.style.boxShadow = "none";
+    navHeader.style.height = "90px";
+    navHeader.style.lineHeight = "90px";
 
   }
-
-}
-
-// add event in all filter button items for large screen
-let lastClickedBtn = filterBtn[0];
-
-for (let i = 0; i < filterBtn.length; i++) {
-
-  filterBtn[i].addEventListener("click", function () {
-
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    filterFunc(selectedValue);
-
-    lastClickedBtn.classList.remove("active");
-    this.classList.add("active");
-    lastClickedBtn = this;
-
-  });
-
 }
 
 
+/* ----- TYPING EFFECT ----- */
+var typingEffect = new Typed(".typedText",{
+  strings : ["Designer","Youtuber","Developer"],
+  loop : true,
+  typeSpeed : 100, 
+  backSpeed : 80,
+  backDelay : 2000
+})
 
-// contact form variables
-const form = document.querySelector("[data-form]");
-const formInputs = document.querySelectorAll("[data-form-input]");
-const formBtn = document.querySelector("[data-form-btn]");
 
-// add event to all form input field
-for (let i = 0; i < formInputs.length; i++) {
-  formInputs[i].addEventListener("input", function () {
+/* ----- ## -- SCROLL REVEAL ANIMATION -- ## ----- */
+const sr = ScrollReveal({
+      origin: 'top',
+      distance: '80px',
+      duration: 2000,
+      reset: true     
+})
 
-    // check form validation
-    if (form.checkValidity()) {
-      formBtn.removeAttribute("disabled");
-    } else {
-      formBtn.setAttribute("disabled", "");
-    }
+/* -- HOME -- */
+sr.reveal('.featured-text-card',{})
+sr.reveal('.featured-name',{delay: 100})
+sr.reveal('.featured-text-info',{delay: 200})
+sr.reveal('.featured-text-btn',{delay: 200})
+sr.reveal('.social_icons',{delay: 200})
+sr.reveal('.featured-image',{delay: 300})
 
-  });
+
+/* -- PROJECT BOX -- */
+sr.reveal('.project-box',{interval: 200})
+
+/* -- HEADINGS -- */
+sr.reveal('.top-header',{})
+
+/* ----- ## -- SCROLL REVEAL LEFT_RIGHT ANIMATION -- ## ----- */
+
+/* -- ABOUT INFO & CONTACT INFO -- */
+const srLeft = ScrollReveal({
+origin: 'left',
+distance: '80px',
+duration: 2000,
+reset: true
+})
+
+srLeft.reveal('.about-info',{delay: 100})
+srLeft.reveal('.contact-info',{delay: 100})
+
+/* -- ABOUT SKILLS & FORM BOX -- */
+const srRight = ScrollReveal({
+origin: 'right',
+distance: '80px',
+duration: 2000,
+reset: true
+})
+
+srRight.reveal('.skills-box',{delay: 100})
+srRight.reveal('.form-control',{delay: 100})
+
+
+
+/* ----- CHANGE ACTIVE LINK ----- */
+
+const sections = document.querySelectorAll('section[id]')
+
+function scrollActive() {
+const scrollY = window.scrollY;
+
+sections.forEach(current =>{
+  const sectionHeight = current.offsetHeight,
+      sectionTop = current.offsetTop - 50,
+    sectionId = current.getAttribute('id')
+
+  if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) { 
+
+      document.querySelector('.nav-menu a[href*=' + sectionId + ']').classList.add('active-link')
+
+  }  else {
+
+    document.querySelector('.nav-menu a[href*=' + sectionId + ']').classList.remove('active-link')
+
+  }
+})
 }
 
-
-
-// page navigation variables
-const navigationLinks = document.querySelectorAll("[data-nav-link]");
-const pages = document.querySelectorAll("[data-page]");
-
-// add event to all nav link
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function () {
-
-    for (let i = 0; i < pages.length; i++) {
-      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
-        pages[i].classList.add("active");
-        navigationLinks[i].classList.add("active");
-        window.scrollTo(0, 0);
-      } else {
-        pages[i].classList.remove("active");
-        navigationLinks[i].classList.remove("active");
-      }
-    }
-
-  });
-}
+window.addEventListener('scroll', scrollActive)
