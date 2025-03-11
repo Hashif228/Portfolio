@@ -208,8 +208,10 @@ nav{
 }
 .social_icons{
     display: flex;
-    margin-top: 5em;
+    margin-top: 3em;
     gap: 30px;
+    justify-content: center;
+    
 }
 .icon{
     display: flex;
